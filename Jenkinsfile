@@ -43,7 +43,7 @@ pipeline {
                    // bat 'echo Unit Test'
                }
            }
-       }
+
 
 /*
         stage('Docker Image') {
