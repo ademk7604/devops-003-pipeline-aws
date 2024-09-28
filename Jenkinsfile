@@ -1,33 +1,49 @@
 pipeline {
+// agent {label 'My-Jenkins-Agent'}
     agent any
 
     tools{
-        jdk 'JDK21'
-        maven 'Maven3'
-    }
+           jdk 'JDK21'
+           maven 'Maven3'
+       }
 
-    stages {
+       stages {
 
-
-        stage('Build Maven') {
-            steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/mimaraslan/devops-002-pipeline']])
-
-                // sh 'mvn clean install'
-                  bat 'mvn clean install'
-            }
-        }
+           stage('Cleanup Workspace') {
+               steps {
+                   cleanWs()
+               }
+           }
 
 
-        stage('Unit Test') {
-            steps {
-                // sh 'mvn test'
-                  bat 'mvn test'
+       stage('Checkout from SCM') {
+               steps {
+               //    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ademk7604/devops-003-pipeline-aws']])
 
-                // sh 'echo Unit Test'
-                // bat 'echo Unit Test'
-            }
-        }
+                   git branch: 'main', credentialsId: 'github', url: 'https://github.com/ademk7604/devops-003-pipeline-aws'
+               }
+           }
+
+       stage('Build Maven') {
+               steps {
+                   //sh 'mvn clean install'
+                   //bat 'mvn clean install'
+
+                   sh 'mvn clean package'
+                   //bat 'mvn clean package'
+               }
+           }
+
+       stage('Test Application') {
+               steps {
+                   sh 'mvn test'
+                   //bat 'mvn test'
+
+                   // sh 'echo Unit Test'
+                   // bat 'echo Unit Test'
+               }
+           }
+       }
 
 
         stage('Docker Image') {
