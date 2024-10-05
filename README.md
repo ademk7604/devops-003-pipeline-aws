@@ -7,7 +7,7 @@ sudo apt upgrade -y
 clear
 
 <hr/>
-
+-->sudo yonetici hakki almak icindeir. nano, yazi yazmak
 sudo nano /etc/hostname
 
 My-Jenkins-Master  
@@ -22,7 +22,7 @@ Makineyi yeniden başlat.
 
 sudo init 6
 sudo reboot
-
+->
 <hr/>
 
 AWS web tarayıcısından Security groups'a gidip
@@ -55,9 +55,7 @@ https://pkg.jenkins.io/debian/jenkins.io-2023.key
 echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
 https://pkg.jenkins.io/debian binary/ | sudo tee \
 /etc/apt/sources.list.d/jenkins.list > /dev/null
-
 sudo apt-get update
-
 sudo apt-get install jenkins  -y
 
 <hr/>
@@ -78,7 +76,7 @@ http://My-Jenkins-Master_makinesinin_public_IPsi_Public_IPv4_address:8080/
 <hr/>
 
 Jenkins'in admin parolası buradadır.
-
+-->cat, okuma yapar.
 sudo cat  /var/lib/jenkins/secrets/initialAdminPassword
 
 
@@ -118,15 +116,9 @@ hostnamectl set-hostname My-Jenkins-Agent
 
 Makineyi yeniden başlat.
 
-sudo init 6
-
-OR
-
-sudo reboot
+sudo init 6         OR      sudo reboot
 
 <hr/>
-
-
 
 Java'yı kuracağız Jenkins için.
 
@@ -156,7 +148,8 @@ sudo reboot
 
 
 My Jenkins Agent için
-
+--> bazi configleri degistirmek icindir. iki makinayi birbirine baglamak icin
+-->master i takip eden agent olacak ve masterin dediklerini yapacak
 sudo nano /etc/ssh/sshd_config
 
 <hr/>
@@ -202,19 +195,26 @@ En sonda ise Enter'a bas.
 
 sudo service ssh reload
 
-
+--> ssh sifre uretme ve anahtar olusturma islemi
 ssh-keygen
 
 OR
 
 ssh-keygen -t ed25519
-
+--> sonra ll yaptigin zaman icerikler gozukuyor renkli olanlar folder digerleri file
 
 Master makinedeki id_ed25519.pub dosyasına çift tıkla
 içindekini kopyala
 
 Agent makinedeki authorized_keys dosyasına çift tıkla
 bunun içine yapıştır ve kaydet
+--> sonuc asagida
+ubuntu@My-Jenkins-Agent:~$ cd .ssh
+ubuntu@My-Jenkins-Agent:~/.ssh$ cat authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCslhapU/8syVRLrVjXkX2DkCz+I33QqFua5zupNVS+7ijfv85EAlqzUiU8/nJkkeN7cS8WWWjp86TH+kwz96/goB1BPhLxlxWcqTkVUK01lwaMR9zxHinRtQWBARB7J2FxETcPlUW3cLC8A/C079S+do5iLR1hS16GXoPJTk7I9JtpiTW++l8E6GAc9m57/WUrIgDv1C/E3aLpr3gPxYL7N6CrgWVN8fGHnAZC/KwcJVbrtVQV3A4Yj64kh8mTHk2wtL1UdxE4wmEKsR0OCuNuwA35jsgxi7c8pl4VCkbBsz/ELSWUkqi3USC7aHAmdhvdEgJAvh5c0WRzm+0CzkTr My-Key-Pair-2024
+
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH0xBFw59G2HlXr6ELtuVECfGPzTP3eQpN45+0uo/U8/ ubuntu@My-Jenkins-Master
+ubuntu@My-Jenkins-Agent:~/.ssh$
 
 
 Master ve Agent makinelerini yeniden başlat.
@@ -231,10 +231,13 @@ sudo cat  /var/lib/jenkins/secrets/initialAdminPassword
 
 
 <hr/>
+--> daha once iki makineyi birbbirine baglamistik. 
+--> Master in hash kodunu agent a verdigim icin artik birbirleri ile anlasabiliyorlar
 
 Agent makineyi node olarak Jenkins Master'a ekliyoruz.
-
-Dashboard ->  Manage Jenkins -> Nodes  -> New Node
+-->  ssh keylerden id_ed25519 iicndeki BEGIN OPENSSH PRIVATE KEY kopyalayip
+--> Jenkins Credentials Provider: Jenkins de Private Key Enter directly yapistiriyoruz
+Dashboard ->  Manage Jenkins -> Nodes  -> New Node add node
 
 
 <hr/>
@@ -341,9 +344,9 @@ exit
 
 <hr/>
 
-
+-->Linux un icindeki uygulamalari indirmek icin google store benziyor
 Adoptium repository
-
+--> kok dizine gider root a gider
 sudo bash
 
 wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | tee /etc/apt/keyrings/adoptium.asc
@@ -355,7 +358,7 @@ echo "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.n
 
 
 <hr/>
-
+--> https://adoptium.net/de/marketplace/ adresini ziyaret edebilirsin
 Adoptium repository
 
 sudo bash
@@ -377,7 +380,7 @@ sudo apt install temurin-17-jdk -y
 sudo update-alternatives --config java
 
 java --version
-
+-->burda java 21 calismiyor 17 yi seciyoruz
 
 
 <hr/>
@@ -409,7 +412,7 @@ vm.max_map_count = 262144
 
 Çıkış için ESC tuşuna bas.
 :wq  yaz
-
+-->enter a bas
 <hr/>
 
 Makineyi yeniden başlat.
@@ -468,7 +471,7 @@ sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
 Sonar servisini oluşturacağız.
 
 sudo vim /etc/systemd/system/sonar.service
-
+--> burasi vim cikis icin, ESC :wq enter ile cikis yapilir
 <hr/>
 Aşağıdaki kodları olduğu gibi bu dosyanın içine yapıştır.
 
@@ -515,7 +518,7 @@ sudo tail -f /opt/sonarqube/logs/sonar.log
 Makinenin public ip değerini al ve 9000 portundan giriş yap.
 kullanıcı: admin
 parola: admin
-
+-->123456789
 
 <hr/>
 
