@@ -84,6 +84,15 @@ pipeline {
                 script {
                     sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
                     sh "docker rmi ${IMAGE_NAME}:latest"
+
+                    // Kullanılmayan Docker volume'leri temizle
+                    sh "docker volume prune -f"
+
+                    // Kullanılmayan Docker container'ları temizle
+                    // sh "docker container prune -f"
+
+                    // Genel sistem temizliği (image, container, volume, network)
+                    // sh "docker system prune -a -f"
                 }
             }
         }
