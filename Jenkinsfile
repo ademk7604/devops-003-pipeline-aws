@@ -86,7 +86,7 @@ pipeline {
                     sh "docker rmi ${IMAGE_NAME}:latest"
 
                     // Kullanılmayan Docker volume'leri temizle
-                    //sh "docker volume prune -f"
+                    sh "docker volume prune -f"
 
                     // Kullanılmayan Docker container'ları temizle
                     // sh "docker container prune -f"
