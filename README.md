@@ -671,15 +671,19 @@ eksctl version
 sudo reboot
 
 kubectl version --client
+--> bu kodu calsitirip eksctl in kurulu oldugunun gormeden asagidaki kodlari calistirmayin
 
 
 
 ### 3 node yapılacak
 
-eksctl create cluster --name my-workspace3-cluster \
+eksctl create cluster --name my-workspace-cluster4 \
 --region us-east-1 \
---node-type t2.large \
+--node-type t2.small \
 --nodes 3
+
+-->silmek icin
+kubectl delete cluster my-workspace-cluster
 
 
 
@@ -693,7 +697,7 @@ kubectl get po
 
 
 ### ArgoCD
-
+--> ArgoCd yi kubernetes makinesine kuruyoruz
 
 
 WEB PAGE
@@ -856,3 +860,5 @@ export AWS_DEFAULT_REGION=us-east-1
 
 Nodeları ve servislerin hepsini cluster adını vererek toplu halde sileceğiz.
 eksctl delete cluster --name my-workspace3-cluster
+
+
